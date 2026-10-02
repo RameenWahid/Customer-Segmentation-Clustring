@@ -1,0 +1,134 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;background:#020617'>
+<style>
+  .cs-wrap{font-family:'Segoe UI',Roboto,Arial,sans-serif;max-width:860px;margin:20px auto;padding:34px;
+    border-radius:24px;color:#e2e8f0;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 55%,#312e81 100%);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+  .cs-wrap:before{content:"";position:absolute;width:420px;height:420px;right:-120px;top:-140px;border-radius:50%;
+    background:radial-gradient(circle,rgba(167,139,250,.35),transparent 70%);animation:cs-float 6s ease-in-out infinite}
+  .cs-badge{display:inline-block;padding:6px 14px;border-radius:999px;font-size:13px;letter-spacing:.5px;
+    background:rgba(34,211,238,.15);color:#22d3ee;border:1px solid rgba(34,211,238,.4);animation:cs-up .7s ease both}
+  .cs-title{font-size:36px;font-weight:800;line-height:1.15;margin:14px 0 6px;
+    background:linear-gradient(90deg,#22d3ee,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;
+    color:transparent;animation:cs-up .8s ease .15s both}
+  .cs-sub{color:#94a3b8;font-size:16px;margin-bottom:16px;animation:cs-up .8s ease .3s both}
+  .cs-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;animation:cs-up .8s ease .45s both}
+  .cs-chips span{padding:5px 12px;border-radius:999px;font-size:12.5px;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.12);color:#cbd5e1}
+  .cs-form{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;animation:cs-up .8s ease .6s both}
+  .cs-field{flex:1;min-width:170px}
+  .cs-field label{display:block;font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .cs-field input{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:12px;font-size:16px;color:#fff;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);outline:none;transition:.2s}
+  .cs-field input:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.2)}
+  .cs-btn{padding:14px 26px;border:0;border-radius:12px;font-size:16px;font-weight:700;color:#0f172a;cursor:pointer;
+    background:linear-gradient(90deg,#22d3ee,#a78bfa);transition:.2s}
+  .cs-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,211,238,.35)}
+  .cs-btn:disabled{opacity:.7;cursor:wait;transform:none}
+  .cs-err{color:#fb7185;font-size:14px;min-height:20px;margin-top:10px}
+  .cs-res{display:none;margin-top:18px;padding:22px;border-radius:18px;background:rgba(255,255,255,.07);
+    border:1px solid var(--c,#22d3ee)}
+  .cs-res.show{display:block;animation:cs-pop .6s ease both}
+  .cs-res small{color:#94a3b8;text-transform:uppercase;letter-spacing:1px;font-size:12px}
+  .cs-res h2{margin:6px 0 4px;font-size:30px;color:var(--c);font-weight:800}
+  .cs-res p{margin:0 0 14px;color:#cbd5e1;font-size:15px}
+  .cs-cmp{display:flex;gap:12px;flex-wrap:wrap}
+  .cs-cmp div{flex:1;min-width:140px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.25);font-size:13px;color:#94a3b8}
+  .cs-cmp b{display:block;color:#fff;font-size:16px;margin-top:2px}
+  .cs-clusters{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .cs-cluster{flex:1;min-width:170px;padding:14px;border-radius:16px;border-top:4px solid var(--c);
+    background:rgba(255,255,255,.05);opacity:.45;transition:.4s}
+  .cs-cluster.active{opacity:1;transform:translateY(-6px);background:rgba(255,255,255,.12);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .cs-ctitle{font-weight:700;color:var(--c);font-size:16px}
+  .cs-csize{font-size:12px;color:#94a3b8;margin-bottom:6px}
+  .cs-cstat{display:flex;justify-content:space-between;font-size:13.5px;padding:2px 0}
+  .cs-cstat span{color:#94a3b8}
+  .cs-foot{margin-top:22px;font-size:14px;color:#22d3ee}
+  .cs-foot span{margin-right:10px}
+  @keyframes cs-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes cs-pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+  @keyframes cs-float{0%,100%{transform:translateY(0)}50%{transform:translateY(24px)}}
+</style>
+
+<div class="cs-wrap">
+  <span class="cs-badge">MACHINE LEARNING PROJECT</span>
+  <div class="cs-title">Customer Segmentation<br>using Clustering</div>
+  <div class="cs-sub">Enter a customer's details and find out which segment they belong to</div>
+  <div class="cs-chips"><span>Data Cleaning</span><span>EDA</span><span>StandardScaler</span>
+    <span>K-Means</span><span>Elbow + Silhouette</span><span>Hierarchical</span></div>
+
+  <div class="cs-form">
+    <div class="cs-field"><label>Age</label>
+      <input id="cs-age" type="number" placeholder="e.g. 28" onkeydown="if(event.key==='Enter')csRun()"></div>
+    <div class="cs-field"><label>Annual Income (k$)</label>
+      <input id="cs-inc" type="number" placeholder="e.g. 60" onkeydown="if(event.key==='Enter')csRun()"></div>
+    <div class="cs-field"><label>Spending Score (1-100)</label>
+      <input id="cs-sp" type="number" placeholder="e.g. 75" onkeydown="if(event.key==='Enter')csRun()"></div>
+    <button class="cs-btn" id="cs-btn" onclick="csRun()">Find Segment</button>
+  </div>
+  <div class="cs-err" id="cs-err"></div>
+
+  <div class="cs-res" id="cs-res">
+    <small>Predicted segment</small>
+    <h2 id="cs-r-title"></h2>
+    <p id="cs-r-desc"></p>
+    <div class="cs-cmp" id="cs-r-cmp"></div>
+  </div>
+
+  <div class="cs-clusters" id="cs-clusters"></div>
+  <div class="cs-foot"><span>#Python</span><span>#scikit-learn</span><span>#DataScience</span></div>
+</div>
+
+<script>
+(function(){
+  var CS = {"mean": [38.918, 57.1165, 42.672], "scale": [13.354822200239134, 28.561477163305124, 20.03393161613566], "clusters": [{"id": 0, "label": "High income / Low spending", "size": 323, "pct": 32, "age": 42, "income": 72, "spend": 35, "center": [0.2273006952846346, 0.5208980460637067, -0.3684238555665534]}, {"id": 1, "label": "Low income / High spending", "size": 538, "pct": 54, "age": 30, "income": 36, "spend": 57, "center": [-0.6471750004311, -0.7506326251035091, 0.7029397479227845]}, {"id": 2, "label": "High income / Low spending", "size": 139, "pct": 14, "age": 65, "income": 106, "spend": 5, "center": [1.9767052205395315, 1.6948941253748961, -1.8646092016867708]}]};
+  var colors = ["#22d3ee","#a78bfa","#f472b6","#fbbf24","#34d399","#fb7185"];
+  var box = document.getElementById("cs-clusters");
+  CS.clusters.forEach(function(c, i){
+    var d = document.createElement("div");
+    d.className = "cs-cluster"; d.id = "cs-c" + i;
+    d.style.setProperty("--c", colors[i % colors.length]);
+    d.innerHTML = '<div class="cs-ctitle">Cluster ' + c.id + '</div><div class="cs-csize">' + c.size +
+      ' customers (' + c.pct + '%)</div><div class="cs-cstat"><span>Avg age</span><b>' + c.age +
+      '</b></div><div class="cs-cstat"><span>Avg income</span><b>' + c.income +
+      'k$</b></div><div class="cs-cstat"><span>Avg spending</span><b>' + c.spend + '</b></div>';
+    box.appendChild(d);
+  });
+
+  window.csRun = function(){
+    var a = parseFloat(document.getElementById("cs-age").value),
+        inc = parseFloat(document.getElementById("cs-inc").value),
+        sp = parseFloat(document.getElementById("cs-sp").value),
+        err = document.getElementById("cs-err"),
+        res = document.getElementById("cs-res"),
+        btn = document.getElementById("cs-btn");
+    if ([a, inc, sp].some(isNaN) || a < 10 || a > 100 || inc < 0 || inc > 400 || sp < 1 || sp > 100){
+      err.textContent = "Please fill all 3 fields with valid values (Age 10-100, Income 0-400, Spending 1-100).";
+      res.classList.remove("show"); return;
+    }
+    err.textContent = ""; res.classList.remove("show");
+    btn.disabled = true; btn.textContent = "Analyzing...";
+    setTimeout(function(){
+      var x = [a, inc, sp].map(function(v, i){ return (v - CS.mean[i]) / CS.scale[i]; });
+      var best = 0, bd = Infinity;
+      CS.clusters.forEach(function(c, i){
+        var d = c.center.reduce(function(s, v, j){ return s + Math.pow(v - x[j], 2); }, 0);
+        if (d < bd){ bd = d; best = i; }
+      });
+      var c = CS.clusters[best], col = colors[best % colors.length];
+      res.style.setProperty("--c", col);
+      document.getElementById("cs-r-title").textContent = "Cluster " + c.id;
+      document.getElementById("cs-r-desc").textContent = c.label + "  |  " + c.pct + "% of all customers";
+      document.getElementById("cs-r-cmp").innerHTML =
+        '<div>Age<b>' + a + ' vs ' + c.age + '</b></div>' +
+        '<div>Income (k$)<b>' + inc + ' vs ' + c.income + '</b></div>' +
+        '<div>Spending<b>' + sp + ' vs ' + c.spend + '</b></div>';
+      CS.clusters.forEach(function(_, i){
+        document.getElementById("cs-c" + i).classList.toggle("active", i === best);
+      });
+      void res.offsetWidth; res.classList.add("show");
+      btn.disabled = false; btn.textContent = "Find Segment";
+    }, 700);
+  };
+})();
+</script>
+</body></html>
